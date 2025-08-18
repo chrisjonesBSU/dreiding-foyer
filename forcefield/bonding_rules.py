@@ -1,0 +1,32 @@
+# Middle bond score: Goal is to limit which atoms are the central atom in a bond angle
+# Middle bond scores: 0 = Never, 1 = Rare, 2 = less likely, 3 = very likely
+
+bonding_rules = {
+    "Al": {"allowed_bonds": ["C", "F", "H", "N", "O", "S", "Cl"], "middle_bond": 1},
+    "As": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 2},
+    "B": {"allowed_bonds": ["B", "C", "Cl", "F", "H", "I", "N", "O", "S"], "middle_bond": 2},
+    "Br": {"allowed_bonds": ["C", "H", "N", "O", "S", "Br"], "middle_bond": 1},
+    "C": {"allowed_bonds": ["B", "C", "Cl", "F", "H", "I", "Mg", "N", "O", "P", "S", "Si", "Br", "Ge",], "middle_bond": 3},
+    "Ca": {"allowed_bonds": ["C", "Cl", "F", "N", "O", "S"], "middle_bond": 0},
+    "Cl": {"allowed_bonds": ["C", "H", "I", "N", "O", "P", "S", "Br", "Cl", "Ge",], "middle_bond": 1},
+    "Cu": {"allowed_bonds": ["N", "O", "S"], "middle_bond": 0},
+    "Fe": {"allowed_bonds": ["C", "F", "N", "O", "P", "S", "Cl"], "middle_bond": 0},
+    "F": {"allowed_bonds": ["Al", "B", "C", "Fe", "Mg", "N", "P", "S", "Si", "Zn", "Ge",], "middle_bond": 1},
+    "Ga": {"allowed_bonds": ["C", "H", "N", "O", "S", "Cl", "Br"], "middle_bond": 1},
+    "Ge": {"allowed_bonds": ["C", "Cl", "F", "H", "N", "O", "S"], "middle_bond": 3},
+    "H": {"allowed_bonds": ["C", "N", "O", "S", "P", "F", "Cl", "Br", "I", "B", "Ge",], "middle_bond": 0},
+    "I": {"allowed_bonds": ["C", "H", "I", "N", "O", "P", "S"], "middle_bond": 1},
+    "In": {"allowed_bonds": ["C", "H", "N", "O", "S", "Cl"], "middle_bond": 0},
+    "Mg": {"allowed_bonds": ["C", "N", "O", "S"], "middle_bond": 0},
+    "Na": {"allowed_bonds": ["C", "H", "N", "O", "S", "Cl"], "middle_bond": 0},
+    "N": {"allowed_bonds": ["B", "C", "Cu", "Fe", "H", "Mg", "N", "O", "P", "S", "Si", "Zn", "F", "Cl", "Br", "I", "Ge",], "middle_bond": 3},
+    "O": {"allowed_bonds": ["Al", "B", "C", "Ca", "Cu", "Fe", "H", "Mg", "Na", "N", "O", "P", "S", "Si", "Zn", "F", "Cl", "Br", "I", "Ge",], "middle_bond": 3},
+    "P": {"allowed_bonds": ["C", "Cl", "F", "H", "N", "O", "S"], "middle_bond": 3},
+    "Sb": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 2},
+    "S": {"allowed_bonds": ["C", "F", "H", "N", "O", "P", "S", "Cl", "Ge",], "middle_bond": 2},
+    "Se": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S", "Se"], "middle_bond": 2},
+    "Si": {"allowed_bonds": ["C", "Cl", "F", "H", "N", "O", "S", "Ge",], "middle_bond": 3},
+    "Sn": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 2},
+    "Te": {"allowed_bonds": ["C", "H", "O", "S", "Se"], "middle_bond": 1},
+    "Zn": {"allowed_bonds": ["C", "F", "N", "O", "P", "S", "Cl"], "middle_bond": 0},
+}
