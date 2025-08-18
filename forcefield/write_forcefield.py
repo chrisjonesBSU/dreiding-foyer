@@ -47,6 +47,7 @@ def _create_forcefield_xml(output_file, atom_types_dict, bonds, angles):
                 "mass": str(vals["mass"]),
                 "def": vals["_def"],
                 "desc": vals["desc"],
+                "overrides": vals["overrides"],
                 "doi": vals["doi"]
             }
         )

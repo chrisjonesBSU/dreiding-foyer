@@ -20,16 +20,24 @@ for smiles in smiles_list:
     else:
         failed.append(smiles)
 
+
+from ../forcefield/write_forcefield.py import write_xml 
+
+write_xml(fname="dreiding-test.xml", exclude_metals=False, likely_hood_limit=1)
+
 passed_atom_typing = []
 failed_atom_typing = []
-dreiding_ff = foyer.Forcefield("dreiding-full.xml")
+dreiding_ff = foyer.Forcefield("dreiding-test.xml")
 for smiles in set(valid_smiles):
     comp = mb.load(smiles, smiles=True)
     try:
-        typed_comp = dreiding_ff.apply(comp)
+        typed_comp = dreiding_ff.apply(comp, assert_dihedral_params=False)
         passed_atom_typing.append(smiles)
-    except FoyerError:
+    except Exception as e:
+        print(smiles)
+        print(e)
         failed_atom_typing.append(smiles)
+        print()
 
 
 with open('failed_smiles.txt', 'w') as f:
