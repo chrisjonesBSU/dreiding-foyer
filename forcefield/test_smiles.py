@@ -37,7 +37,7 @@ write_xml(fname="dreiding-test.xml", exclude_metals=False, likely_hood_limit=1)
 ffxml_loader = ff_utils.FoyerFFs()
 dreiding_foyer = ffxml_loader.load("dreiding-test.xml")
 dreiding_gmso = dreiding_foyer.to_gmso_ff()
-dreiding_gmso.to_xml("dreiding-test-gmso.xml")
+dreiding_gmso.to_xml("dreiding-test-gmso.xml", overwrite=True)
 
 passed_atom_typing = []
 failed_atom_typing = []
