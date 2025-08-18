@@ -157,7 +157,7 @@ dreiding_atom_types = {
         desc="Carbon in 5-membered rings",
         mass=ele.element_from_symbol("C").mass,
         element="C",
-        doi="10.1021/j100389a010",
+        doi="", # Added manually, theta taken from OPLS-AA
         is_metal=False,
     ),
     "N_1": dict(
@@ -298,7 +298,7 @@ dreiding_atom_types = {
         mass=ele.element_from_symbol("O").mass,
         element="O",
         is_metal=False,
-        doi="",
+        doi="", # Added manually, theta taken from OPLS-AA
     ),
     "F_": dict(
         vdw_r=3.4720 * u.Angstrom,

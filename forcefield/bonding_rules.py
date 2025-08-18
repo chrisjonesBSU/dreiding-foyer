@@ -1,5 +1,6 @@
 # Middle bond score: Goal is to limit which atoms are the central atom in a bond angle
 # Middle bond scores: 0 = Never, 1 = Rare, 2 = less likely, 3 = very likely
+# This is done at the elemental level, and applied to all atom types that match the element
 
 bonding_rules = {
     "Al": {"allowed_bonds": ["C", "F", "H", "N", "O", "S", "Cl"], "middle_bond": 1},
@@ -20,11 +21,11 @@ bonding_rules = {
     "N": {"allowed_bonds": ["B", "C", "Cu", "Fe", "H", "Mg", "N", "O", "P", "S", "Si", "Zn", "F", "Cl", "Br", "I", "Ge", "Na"], "middle_bond": 3},
     "O": {"allowed_bonds": ["Al", "B", "C", "Ca", "Cu", "Fe", "H", "Mg", "Na", "N", "O", "P", "S", "Si", "Zn", "F", "Cl", "Br", "I", "Ge",], "middle_bond": 3},
     "P": {"allowed_bonds": ["C", "Cl", "F", "H", "N", "O", "S"], "middle_bond": 3},
-    "Sb": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 2},
-    "S": {"allowed_bonds": ["C", "F", "H", "N", "O", "P", "S", "Cl", "Ge", "Na"], "middle_bond": 2},
+    "Sb": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 1},
+    "S": {"allowed_bonds": ["C", "F", "H", "N", "O", "P", "S", "Cl", "Ge", "Na"], "middle_bond": 3},
     "Se": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S", "Se"], "middle_bond": 2},
     "Si": {"allowed_bonds": ["C", "Cl", "F", "H", "N", "O", "S", "Ge",], "middle_bond": 3},
-    "Sn": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 2},
+    "Sn": {"allowed_bonds": ["C", "Cl", "H", "N", "O", "S"], "middle_bond": 1},
     "Te": {"allowed_bonds": ["C", "H", "O", "S", "Se", "Cl"], "middle_bond": 1},
     "Zn": {"allowed_bonds": ["C", "F", "N", "O", "P", "S", "Cl"], "middle_bond": 1},
 }
