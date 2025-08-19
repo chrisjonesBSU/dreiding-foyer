@@ -1,3 +1,9 @@
+"""
+This file contains fucntions for calculating the bond stretching and bond bending parameters.
+The bond torsion parameters are not yet implemented.
+These methods are used in `write_forcefield.py`.
+"""
+
 import numpy as np
 import unyt as u
 
@@ -69,91 +75,3 @@ def equil_torsion_angle(atom1, atom2, atom3, atom4):
     V_jk, n and phi_jk only depend on atom 2 and aotm 3
     """
     raise NotImplementedError
-
-
-def create_forcefield_xml(output_file, atom_types_dict, bonds, angles):
-    ForceField = ET.Element(
-        "ForceField",
-        name="mBuild_Dreiding",
-        version="0.1.0",
-        combining_rule="geometric"
-    )
-
-    # Add AtomTypes
-    AtomTypes = ET.SubElement(ForceField, "AtomTypes")
-    for atom_type, vals in atom_types_dict.items():
-        ET.SubElement(
-            AtomTypes,
-            "Type",
-            **{
-                "name": atom_type,
-                "class": atom_type,
-                "element": vals["element"],
-                "mass": str(vals["mass"]),
-                "def": vals["_def"],
-                "desc": vals["desc"],
-                "doi": vals["doi"]
-            }
-        )
-    
-    # Add HarmonicBondForce
-    HarmonicBondForce = ET.SubElement(ForceField, "HarmonicBondForce")
-    for bond in bonds:
-        atom1_dict = dreiding_atom_types[bond[0]]
-        atom2_dict = dreiding_atom_types[bond[1]]
-        eq_length = equil_bond_distance(atom1=atom1_dict, atom2=atom2_dict)
-        bond_k = bond_energy(atom1=atom1_dict, atom2=atom2_dict)
-        
-        ET.SubElement(
-            HarmonicBondForce,
-            "Bond",
-            **{
-                "class1": bond[0],
-                "class2": bond[1],
-                "length": str(float(eq_length)),
-                "k": str(float(bond_k)),
-            }
-        )
-
-    # Add HarmonicAngleForce
-    HarmonicAngleForce = ET.SubElement(ForceField, "HarmonicAngleForce")
-    for angle in angles:
-        atom2_dict = dreiding_atom_types[angle[1]]
-        theta = equil_bond_angle(central_atom=atom2_dict)
-        angle_k = angle_energy(central_atom=atom2_dict)
-
-        if theta == 0:
-            continue
-        
-        ET.SubElement(
-            HarmonicAngleForce,
-            "Angle",
-            **{
-                "class1": angle[0],
-                "class2": angle[1],
-                "class3": angle[2],
-                "angle": str(float(theta)),
-                "k": str(float(angle_k)),
-            }
-        )
-
-    # Add NonbondedForce
-    NonbondedForce = ET.SubElement(
-        ForceField, "NonbondedForce",
-        coulomb14scale="0.0",
-        lj14scale="1.0"
-    )
-    for atom_type, vals in atom_types_dict.items():
-        ET.SubElement(
-            NonbondedForce,
-            "Atom",
-            **{
-                "type": atom_type,
-                "charge": "0.0",
-                "sigma": str(float(vals["vdw_r"].to("nm"))),
-                "epsilon": str(float(vals["D"].to("kJ"))),
-            }
-        )
-    tree = ET.ElementTree(ForceField)
-    ET.indent(tree, space="  ", level=0)
-    tree.write(output_file, encoding="utf-8", xml_declaration=True)

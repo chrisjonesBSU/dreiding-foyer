@@ -1,10 +1,13 @@
+"""
+This file contains a dictionary of the atom types and their defined parameters.
+This is used in `write_forcefield.py`.
+"""
 import ele
 import unyt as u
 
-# Values as is from the paper.
-# R in angstrom and D in kcal/mol
 
 # Contains all info from Table I and Table II in the paper.
+# Values as is from the paper: R in angstrom and D in kcal/mol
 dreiding_atom_types = {
     "H_" : dict(
         vdw_r=3.195 * u.Angstrom,
