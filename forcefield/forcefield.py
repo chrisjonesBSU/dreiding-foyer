@@ -52,7 +52,7 @@ def angle_energy(central_atom):
         C = K / (np.sin(theta_j)**2)
         return C.value / 2
     else:
-        return K.value
+        return K.value / 2
 
 
 def equil_torsion_angle(atom1, atom2, atom3, atom4):
