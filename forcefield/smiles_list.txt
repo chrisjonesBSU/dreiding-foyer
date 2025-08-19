@@ -22,6 +22,16 @@ O=C1CCCCC1
 CCl
 CBr
 CI
+NCC(=O)O
+CC(C(=O)O)N
+CC(C)C(C(=O)O)N
+N[C@@H](Cc1ccccc1)C(=O)O
+N[C@@H](CCC(=O)N)C(=O)O
+N[C@@H](CC(=O)O)C(=O)O
+N[C@@H](CCC(=O)O)C(=O)O
+N[C@@H](CCCCN)C(=O)O
+N[C@@H](CCCNC(=N)N)C(=O)O
+CC(C)CC(C(=O)O)N
 CCCl
 C(CCl)Cl
 CN
@@ -72,6 +82,10 @@ C=CC
 CC(C)O
 NCCO
 CC(F)CF
+Nc1ncnc2c1ncn2C3OC(COP(=O)(O)OP(=O)(O)OP(=O)(O)O)C(C3O)O
+CC1=CN(C(=O)NC1=O)C2OC(COP(=O)(O)OP(=O)(O)OP(=O)(O)O)C(C2O)O
+NC(=O)c1cnc[nH]1C2OC(COP(=O)(O)OP(=O)(O)OP(=O)(O)O)C(C2O)O
+Nc1nc2c(n1)n(cn2)C3OC(COP(=O)(O)OP(=O)(O)OP(=O)(O)O)C(C3O)O
 C[Ca]Cl
 CCIO
 C1SCCS1
