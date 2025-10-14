@@ -90,27 +90,36 @@ def equil_torsion_angle(atomi, bondij, atomj, bondjk, atomk, bondkl, atoml):
     V_jk, n and phi_jk only depend on atom 2 and aotm 3
     """
     # TODO: validate fix if statements
-    if atomj[-2:] == "_3" and atomk[-2:] == "_3" and bondjk == "-": # case a
+    i, j, k, l = atomi[-2:], atomj[-2:], atomk[-2:], atoml[-2:]
+    sp2 = ["_2", "_R"]
+    sp3 = ["_3"]
+    if j == "_3" and k == "_3" and bondjk == "-": # case a
         return {"n":3*u.dimensionless, "V_jk":2*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-a"}
-    elif not atomi[-2:] in ["_2", "_R"]  and atomj[:-2] in ["_2", "_R"] and atomk[-2:] == "_3" and bondjk == "-": # case j exception to case b
-        return {"n":3*u.dimensionless, "V_jk":2*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-j"}
-    elif atomj[-2:] in ["_2", "_R"] and atomk[-2:] == "_3" and bondjk == "-": # case b
-        return {"n":6*u.dimensionless, "V_jk":1*u.kcal/u.mol, "phi_jk":0*u.degree, "name":"case-b"}
-    elif atomj[-2:] == "_2" and atomk[-2:] == "_2" and bondjk == "=": # case c
+    elif j in sp2 and k in sp3 and bondjk == "-": # case j or case b
+        if i in sp2:
+            return {"n":3*u.dimensionless, "V_jk":2*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-j"}
+        else:
+            return {"n":6*u.dimensionless, "V_jk":1*u.kcal/u.mol, "phi_jk":0*u.degree, "name":"case-b"}
+    elif k in sp2 and j in sp3 and bondjk == "-": # case j or case b
+        if l in sp2:
+            return {"n":3*u.dimensionless, "V_jk":2*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-j"}
+        else:
+            return {"n":6*u.dimensionless, "V_jk":1*u.kcal/u.mol, "phi_jk":0*u.degree, "name":"case-b"}
+    elif j == "_2" and k == "_2" and bondjk == "=": # case c
         return {"n":2*u.dimensionless, "V_jk":45*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-c"}
-    elif atomj[-2:] == "_R" and atomk[-2:] == "_R" and bondjk==":": # case d
+    elif j == "_R" and k == "_R" and bondjk==":": # case d
         return {"n":2*u.dimensionless, "V_jk":25*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-d"}
-    elif atomj[-2:] == "_R" and atomk[-2:] == "_R" and bondjk == "-": # casef checks before casee
+    elif j == "_R" and k == "_R" and bondjk == "-": # casef checks before casee
         return {"n":2*u.dimensionless, "V_jk":10*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-f"}
-    elif (atomj[-2:] == "_2" or atomj[-2:] == "_R") and (atomk[-2:] == "_2" or atomk[-2:] == "_R") and bondjk == "-": # case e
+    elif j in sp2 and k in sp2 and bondjk == "-": # case e
         return {"n":2*u.dimensionless, "V_jk":5*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-e"}
-    elif (atomj[-2:] == "_1" or dreiding_atom_types[atomj].get("is_metal") or dreiding_atom_types[atomj].get("element") in halogens) or (
-        atomk[-2:] == "_1" or dreiding_atom_types[atomk].get("is_metal") or dreiding_atom_types[atomk].get("element") in halogens
+    elif (j == "_1" or dreiding_atom_types[atomj].get("is_metal") or dreiding_atom_types[atomj].get("element") in halogens) or (
+        k == "_1" or dreiding_atom_types[atomk].get("is_metal") or dreiding_atom_types[atomk].get("element") in halogens
         ): # case g
         return None
-    elif atomj[-2:] == "_3" and atomk[-2:] == "_3" and atomj.split("_")[0] in ["O", "S", "Se"] and atomk.split("_")[0] in ["O", "S", "Se"]: # case h
+    elif j == "_3" and k == "_3" and atomj.split("_")[0] in ["O", "S", "Se"] and atomk.split("_")[0] in ["O", "S", "Se"]: # case h
         return {"n":2*u.dimensionless, "V_jk":2*u.kcal/u.mol, "phi_jk":90*u.degree, "name":"case-h"}
-    elif atomj[-2:] == "_3" and atomj.split("_")[0] in ["O", "S", "Se"] and atomk[-2:] in ["_R", "_2"]: # case i
+    elif j == "_3" and j.split("_")[0] in ["O", "S", "Se"] and k in ["_R", "_2"]: # case i
         return {"n":2*u.dimensionless, "V_jk":5*u.kcal/u.mol, "phi_jk":180*u.degree, "name":"case-i"}
-    print(f"NotImplementedError{(atomi, atomj, atomk, atoml, bondij, bondjk, bondkl)}")
+    print(f"NotImplementedError{(atomi, bondij, j, bondjk, k, bondkl, l)}")
     return None

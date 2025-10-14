@@ -32,12 +32,12 @@ def write_xml(fpath, exclude_metals=True, likely_hood_limit=1):
     all_angles = _get_all_angles(all_atom_types, likely_hood_limit=likely_hood_limit, exclude_metals=exclude_metals)
     all_dihedrals = _get_all_dihedrals(all_atom_types, likely_hood_limit=likely_hood_limit, exclude_metals=exclude_metals)
 
-    _create_forcefield_foyer_xml(
-        output_file=fpath+"/foyer-dreiding.xml",
-        atom_typesDict=all_atom_types,
-        bonds=all_bonds,
-        angles=all_angles
-    )
+    # _create_forcefield_foyer_xml(
+    #     output_file=fpath+"/foyer-dreiding.xml",
+    #     atom_typesDict=all_atom_types,
+    #     bonds=all_bonds,
+    #     angles=all_angles
+    # )
     _create_forcefield_gmso_xml(
         output_file=fpath+"/gmso-dreiding.xml",
         atom_typesDict=all_atom_types,
@@ -295,33 +295,24 @@ def _get_all_dihedrals(atom_typesDict, likely_hood_limit=1, exclude_metals=True)
         atom_type_bonds = _parse_bond_types(atom_typesDict, atom_type, exclude_metals=exclude_metals) # all sets of middle bond pairs
         for bond_type in atom_type_bonds:
             atomj, bondjk, atomk = bond_type
-            master_dihedrals_list.add(("*", "~", atomj, bondjk, atomk, "~", "*"))
+            if atomj[-2:] in ["_2", "_R"] and atomk[-2:] in ["_3"] and bondjk =="-": # 
+                ijk_dihedrals = _generate_case_borj_dihedrals(atom_typesDict, atomj, atomk, bondjk, exclude_metals=exclude_metals)
+                for dihedral in ijk_dihedrals:
+                    master_dihedrals_list.add(dihedral)
+            elif atomk[-2:] in ["_2", "_R"] and atomj[-2:] in ["_3"] and bondjk == "-": # 
+                ijk_dihedrals = _generate_case_borj_dihedrals(atom_typesDict, atomk, atomj, bondjk, exclude_metals=exclude_metals)
+                for dihedral in ijk_dihedrals:
+                    master_dihedrals_list.add(dihedral)
+            else: # i and l wildcard version
+                master_dihedrals_list.add(("*", "~", atomj, bondjk, atomk, "~", "*"))
     return master_dihedrals_list
 
-
-if __name__ == "__main__":
-    from pathlib import Path
-    import mbuild as mb
-    import gmso
-    from gmso.parameterization import apply
-
-
-    path = Path(__file__).parent / "../xmls"
+def _generate_case_borj_dihedrals(atom_typesDict, atomj, atomk, bondjk, exclude_metals=True):
+    dihedrals = []
+    for atom_type in atom_typesDict:
+        if atom_type[:-2] in ["_2", "_R"]: # case b
+            dihedrals.append((atom_type, "~", atomj, bondjk, atomk, "~", "*"))
+        else: # case j, maybe use wildcard here??
+            dihedrals.append((atom_type, "~", atomj, bondjk, atomk, "~", "*"))
     
-    write_xml(str(path))
-
-    # test gmso loading forcefield
-    ff = gmso.ForceField(str(path/"gmso-dreiding.xml"))
-
-    # DIHEDRALS TESTING
-    from collections import Counter
-    test_molecules = ["CC", "CC(=O)O", "C1CCCCC1CN", "C=C", "C1(=CC=CC=C1)C2=CC=CC=C2", "C1=CC=CC=C1CC1=CC=CC=C1"]
-    test_dihedrals = [{"case-a":9}, {"case-b":1, "case-c":1}]
-    for mol, dih in zip(test_molecules, test_dihedrals):
-        top = mb.load(mol, smiles=True).to_gmso()
-        typed_top = apply(top, ff, identify_connections=True, ignore_params=["dihedral", "improper"]) # gmso
-        dihedralsCounter = Counter([dihedral.dihedral_type.name for dihedral in typed_top.dihedrals])
-        for key in dih:
-            assert dihedralsCounter["PeriodicTorsion-"+key] == dih[key]
-
-    # HOOMD TESTING
+    return dihedrals
