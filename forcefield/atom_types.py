@@ -36,7 +36,7 @@ dreiding_atom_types = {
         element="H",
         doi="10.1021/j100389a010",
         is_metal=False,
-    ), 
+    ),
     "H_b": dict( # Bridging hydrogen atom in Diborane; H forms 2 bonds
         vdw_r=3.195 * u.Angstrom,
         D=0.0152 * u.kcal,
@@ -51,15 +51,29 @@ dreiding_atom_types = {
         doi="10.1021/j100389a010",
         is_metal=False,
     ),
+    "B_2": dict(
+        vdw_r=3.8983 * u.Angstrom,
+        D=0.0951 * u.kcal,
+        psi=14.034,
+        bond_r=0.790 * u.Angstrom,
+        theta=120 * u.deg,
+        _def="[B;X3](-*)(-*)(-*)",
+        desc="Boron with 2 bonds SP2",
+        overrides="",
+        mass=ele.element_from_symbol("B").mass,
+        element="B",
+        doi="10.1021/j100389a010",
+        is_metal=False,
+    ),
     "B_3": dict(
         vdw_r=3.8983 * u.Angstrom,
         D=0.0951 * u.kcal,
         psi=14.034,
         bond_r=0.880 * u.Angstrom,
         theta=109.471 * u.deg,
-        _def="[B]",
+        _def="[B;X4](-*)(-*)(-*)(-*)",
         overrides="",
-        desc="Boron",
+        desc="Boron SP3 hybridized",
         mass=ele.element_from_symbol("B").mass,
         element="B",
         doi="10.1021/j100389a010",
@@ -116,7 +130,7 @@ dreiding_atom_types = {
         _def="[C;r5,r6](:*)(:*)",
         overrides="C_2",
         desc="Carbon in a 6-membered ring",
-        mass=ele.element_from_symbol("C").mass,        
+        mass=ele.element_from_symbol("C").mass,
         element="C",
         doi="10.1021/j100389a010",
         is_metal=False,
@@ -205,7 +219,7 @@ dreiding_atom_types = {
         is_metal=False,
         doi="10.1021/j100389a010",
     ),
-    "O_1_2": dict( 
+    "O_1_2": dict(
         vdw_r=3.4046 * u.Angstrom,
         D=0.0957 * u.kcal,
         psi=13.843,
@@ -219,7 +233,7 @@ dreiding_atom_types = {
         is_metal=False,
         doi="10.1021/j100389a010",
     ),
-    "O_2_2": dict( 
+    "O_2_2": dict(
         vdw_r=3.4046 * u.Angstrom,
         D=0.0957 * u.kcal,
         psi=13.843,
@@ -358,7 +372,7 @@ dreiding_atom_types = {
         element="Ga",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "Ge3": dict(
         vdw_r=4.27 * u.Angstrom,
         D=0.40 * u.kcal,
@@ -372,7 +386,7 @@ dreiding_atom_types = {
         element="Ge",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "As3": dict(
         vdw_r=4.15 * u.Angstrom,
         D=0.41 * u.kcal,
@@ -386,7 +400,7 @@ dreiding_atom_types = {
         element="As",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "Se3": dict(
         vdw_r=4.03 * u.Angstrom,
         D=0.43 * u.kcal,
@@ -400,7 +414,7 @@ dreiding_atom_types = {
         element="Se",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "Br": dict(
         vdw_r=3.9 * u.Angstrom,
         D=0.37 * u.kcal,
@@ -414,7 +428,7 @@ dreiding_atom_types = {
         element="Br",
         is_metal=False,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "In": dict(
         vdw_r=4.59 * u.Angstrom,
         D=0.55 * u.kcal,
@@ -428,7 +442,7 @@ dreiding_atom_types = {
         element="In",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "Sn3": dict(
         vdw_r=4.47 * u.Angstrom,
         D=0.55 * u.kcal,
@@ -442,7 +456,7 @@ dreiding_atom_types = {
         element="Sn",
         is_metal=True,
         doi="10.1021/j100389a010",
-    ),    
+    ),
     "Sb3": dict(
         vdw_r=4.35 * u.Angstrom,
         D=0.55 * u.kcal,
