@@ -31,13 +31,18 @@ for smiles in smiles_list:
 
 from write_forcefield import write_xml 
 
-write_xml(fname="dreiding-test.xml", exclude_metals=False, likely_hood_limit=1)
+# write_xml(fname="dreiding-test.xml", exclude_metals=False, likely_hood_limit=1)
 
 
-ffxml_loader = ff_utils.FoyerFFs()
-dreiding_foyer = ffxml_loader.load("dreiding-test.xml")
-dreiding_gmso = dreiding_foyer.to_gmso_ff()
-dreiding_gmso.to_xml("dreiding-test-gmso.xml", overwrite=True)
+# ffxml_loader = ff_utils.FoyerFFs()
+# dreiding_foyer = ffxml_loader.load("dreiding-test.xml")
+# dreiding_gmso = dreiding_foyer.to_gmso_ff()
+# dreiding_gmso.to_xml("dreiding-test-gmso.xml", overwrite=True)
+
+import gmso
+from pathlib import Path
+path = Path(__file__).parent/ "../xmls"
+gmso_ff = gmso.ForceField(str(path/"gmso-dreiding.xml"))
 
 passed_atom_typing = []
 failed_atom_typing = []
@@ -45,7 +50,8 @@ for smiles in set(valid_smiles):
     comp = mb.load(smiles, smiles=True)
     gmso_top = comp.to_gmso()
     try:
-        typed_comp = apply(gmso_top, dreiding_gmso, identify_connections=True, ignore_params=["dihedral", "improper"])
+        # typed_comp = apply(gmso_top, dreiding_gmso, identify_connections=True, ignore_params=["dihedral", "improper"]) # foyer
+        typed_comp = apply(gmso_top, gmso_ff, identify_connections=True, ignore_params=["dihedral", "improper"]) # gmso
         passed_atom_typing.append(smiles)
     except Exception as e:
         failed_atom_typing.append(smiles)
